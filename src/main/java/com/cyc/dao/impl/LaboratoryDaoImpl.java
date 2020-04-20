@@ -184,6 +184,30 @@ public class LaboratoryDaoImpl implements LaboratoryDao{
 		}
 		return laboratory;
 	}
+
+
+	public int isFree(String sql) {
+		int result = -1;
+		try {
+			conn = DbUtil.getConnection();
+			ps = conn.prepareStatement(sql);
+            rs =  ps.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+				try {
+					if(rs != null) rs.close();
+					if(ps != null) ps.close();
+					if(conn != null) conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+		return result;
+	}
 	
 
 }

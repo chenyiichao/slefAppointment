@@ -59,6 +59,7 @@ public class StudentDaoImpl implements StudentDao{
 				student.setName(rs.getString(2));
 				student.setPassword(rs.getString(3));
 				student.setPhone(rs.getString(4));
+				student.setClazz(rs.getString(5));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -26,5 +26,7 @@ public interface LaboratoryDao {
 
 	Laboratory findLaboratoryById(String string);
 
+	int isFree(String sql6);
+
 
 }

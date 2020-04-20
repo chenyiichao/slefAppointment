@@ -1,6 +1,7 @@
 package com.cyc.web;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.cyc.service.LaboratoryService;
 import com.cyc.service.impl.LaboratoryServiceImpl;
+import com.google.gson.Gson;
 
 
 @WebServlet("/applyServlet")
@@ -23,7 +25,8 @@ public class ApplyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8"); 
 		response.setCharacterEncoding("UTF-8");
-		
+		response.setContentType("application/json;charset=utf-8");
+		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		if(session.getAttribute("userId") == null) {
 			response.sendRedirect("/login.jsp");
@@ -37,8 +40,12 @@ public class ApplyServlet extends HttpServlet {
 		String id = (String)session.getAttribute("userId");
 		String classTime = request.getParameter("classTime");
 		System.out.println("session中的userId:"+id);
-		laboratoryService.addChecking(lbId,testName,date,type,equipment,id,classTime);
-		response.sendRedirect("index.jsp");
+		Gson json = new Gson();
+		boolean isAdd = laboratoryService.addChecking(lbId,testName,date,type,equipment,id,classTime);
+		String jsonStr = json.toJson(isAdd);
+		out.print(jsonStr);
+//		String page = isAdd?"index.jsp":"apply.jsp";
+//		response.sendRedirect(page);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -62,39 +62,47 @@ public class LaboratoryServiceImpl implements LaboratoryService{
 		String lbAddress = "\'" + laboratory.getLbAddress() + "\'";
 		String lb_type = "\'" + laboratory.getType() + "\'"; // 这个是实验室类型
 		
-		// 3.将申请表信息插入checking表单
-		String sql3 = "insert into checking values("
-						+  id  + ","
-						+ name + "," 
-						+ lbId + "," 
-						+ lb_type + ","
-						+ testName + ","
-						+ lbAddress + ","
-						+ date + ","
-						+ classTime + ","
-						+ equipment + ","
-						+ clazz +  ","
-						+ type + ")";
-		
-		// 4.添加审核表之后,实验室的某天某节数变为预约状态
-		String sql4 = "update laboratory SET state = \'已预约\' "
-				+ " where class_time = " + classTime 
-				+ " and date = " + date 
-				+ " and lb_id = " + lbId;
-		laboratoryDao.updateState(sql4);
-		
-		//5.判断实验室是否存在
-		String sql5 = "select id from checking "
+
+		//3.判断审核表是否存在
+		String sql3 = "select id from checking "
 				+ " where date = " + date
 				+ " and class_time = " + classTime
 				+ " and lb_id =  " + lbId; 
-
-		System.out.println(sql);  
+		boolean isExist = checkingDao.findChecking(sql3);
+		
+		//4.判断该实验室是否空闲
+		String sql4 = "select count(lb_id) from laboratory" 
+				+ " where date = " + date
+				+ " and class_time = " + classTime
+				+ " and lb_id =  " + lbId 
+				+ " and state = '未预约' "; 
+		int countFree  = laboratoryDao.isFree(sql4); //没有查询到该实验室 -1为未查询，0表示未查询到，1表示查询到
+		// 5.添加审核表之后,实验室的某天某节数变为预约状态
+		String sql5 = "update laboratory SET state = \'已预约\' "
+				+ " where class_time = " + classTime 
+				+ " and date = " + date 
+				+ " and lb_id = " + lbId;
+		
+		// 6.将申请表信息插入checking表单
+		String sql6 = "insert into checking values("
+						+  id  + "," + name + ","  + lbId + "," 
+						+ lb_type + "," + testName + "," + lbAddress + ","
+						+ date + "," + classTime + "," + equipment + ","
+						+ clazz +  "," + type + ")";
+		System.out.println("countFree:"+ countFree);  
+		System.out.println("isExist:"+isExist);
+		System.out.println(sql);
 		System.out.println(sql2);  
 		System.out.println(sql3);  
 		System.out.println(sql4);  
 		System.out.println(sql5);  
-		return checkingDao.findChecking(sql5)? false:checkingDao.addChecking(sql3);
+		System.out.println(sql6);
+		if( isExist || (countFree < 1) ) {
+			laboratoryDao.updateState(sql5);
+			checkingDao.addChecking(sql6);
+			return true;
+		}
+		return  false;
 	}
 
 

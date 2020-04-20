@@ -1,95 +1,77 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!-- JSTL 核心标签库 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@page isELIgnored="false" %> 
+<%@page isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <!-- 引入样式 -->
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-  <!-- 引入组件库 -->
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-  <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+<!-- 引入样式 -->
+<link rel="stylesheet"
+	href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
 
-  <title>实验室申请表</title>
+<title>实验室申请表</title>
 </head>
 
 <style>
-  body {
-    height: 780px;
-    background: #f1f6f4 url(../images/header-image.jpg) no-repeat center;
-    position: relative;
-    padding: 1px 0 0 0;
-  }
+body {
+	height: 780px;
+	background: #f1f6f4 url(../images/header-image.jpg) no-repeat center;
+	position: relative;
+	padding: 1px 0 0 0;
+}
 </style>
 
 
 <body>
-  <!--查询表格-->
+	<!--查询表格-->
 
-  <div id="vue_3">
-    <br>
-    <section id="banner">
-      <el-row :gutter="20">
-        <!--布局-->
-        <el-col :span="12" :offset="6">
-          <div>
-            <el-card class="box-card">
-              <h2 style="text-align: center;">申请表填写</h2>
-              <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                <el-form-item label="实验室编号" prop="region">
-                  <el-input v-model="ruleForm.region" style="width: 300px;" placeholder="${lbId}"></el-input>
-                </el-form-item>
-                <el-form-item label="实验名称" prop="region">
-                  <el-input v-model="ruleForm.testname" style="width: 300px;" ></el-input>
-                </el-form-item>
-                <el-form-item label="实验日期" prop="date1">
-                  <el-select v-model="ruleForm.date1" placeholder="${date}" >
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="实验时间" prop="date2">
-                  <el-select v-model="ruleForm.date2" placeholder="${classTime}">
-                    <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-
-                <el-form-item label="校园网" prop="net">
-                  <el-switch v-model="ruleForm.net"></el-switch>
-                </el-form-item>
-                <el-form-item label="实验类型" prop="resource">
-                  <el-radio-group v-model="ruleForm.resource">
-                    <el-radio label="课程实验"></el-radio>
-                    <el-radio label="实践作业"></el-radio>
-                    <el-radio label="个人科研"></el-radio>
-                    <el-radio label="其他（请在活动形式中说明）"></el-radio>
-                  </el-radio-group>
-                </el-form-item>
-                <el-form-item label="实验形式" prop="desc">
-                  <el-input type="textarea" v-model="ruleForm.desc"></el-input>
-                </el-form-item>
-                <el-form-item>
-                  <el-button type="primary" @click="submitForm('ruleForm')">立即预约</el-button>
-                  <el-button @click="resetForm('ruleForm')">重置</el-button>
-                 <!--  <el-button @click="comeback()">返回</el-button> -->
-                </el-form-item>
-              </el-form>
-
-            </el-card>
-          </div>
-        </el-col>
-      </el-row>
-    </section>
-  </div>
+	<div id="vue_3">
+		<br>
+		<section id="banner">
+			<el-row :gutter="20"> <!--布局--> <el-col :span="12"
+				:offset="6">
+			<div>
+				<el-card class="box-card">
+				<h2 style="text-align: center;">申请表填写</h2>
+				<el-form :model="ruleForm" :rules="rules" ref="ruleForm"
+					label-width="100px" class="demo-ruleForm"> <el-form-item
+					label="实验室编号" prop="region"> <el-input
+					v-model="ruleForm.region" style="width: 300px;"
+					placeholder="${lbId}"></el-input> </el-form-item> <el-form-item label="实验名称"
+					prop="region"> <el-input v-model="ruleForm.testname"
+					style="width: 300px;"></el-input> </el-form-item> <el-form-item label="实验日期"
+					prop="date1"> <el-select v-model="ruleForm.date1"
+					placeholder="${date}"> <el-option
+					v-for="item in options" :key="item.value" :label="item.label"
+					:value="item.value"> </el-option> </el-select> </el-form-item> <el-form-item label="实验时间"
+					prop="date2"> <el-select v-model="ruleForm.date2"
+					placeholder="${classTime}"> <el-option
+					v-for="item in options2" :key="item.value" :label="item.label"
+					:value="item.value"> </el-option> </el-select> </el-form-item> <el-form-item label="校园网"
+					prop="net"> <el-switch v-model="ruleForm.net"></el-switch>
+				</el-form-item> <el-form-item label="实验类型" prop="resource"> <el-radio-group
+					v-model="ruleForm.resource"> <el-radio
+					label="课程实验"></el-radio> <el-radio label="实践作业"></el-radio> <el-radio
+					label="个人科研"></el-radio> <el-radio label="其他（请在活动形式中说明）"></el-radio>
+				</el-radio-group> </el-form-item> <el-form-item label="实验形式" prop="desc"> <el-input
+					type="textarea" v-model="ruleForm.desc"></el-input> </el-form-item> <el-form-item>
+				<el-button type="primary" @click="submitForm('ruleForm')">立即预约</el-button>
+				<el-button @click="resetForm('ruleForm')">重置</el-button> <!--  <el-button @click="comeback()">返回</el-button> -->
+				</el-form-item> </el-form> </el-card>
+			</div>
+			</el-col> </el-row>
+		</section>
+	</div>
 </body>
 
 
@@ -180,23 +162,27 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-   			alert('预约成功，等待管理员审核');
-            console.log(this.ruleForm);
+            //console.log(this.ruleForm);
             // axios提交 
-                axios.get('applyServlet?lbId='+this.ruleForm.region+"&testName="+this.ruleForm.testname+"&date="+
-            		   this.ruleForm.date1+"&classTime="+this.ruleForm.date2+"&type="+this.ruleForm.resource+
-            		   "&equipment="+this.ruleForm.desc, {
-                   params: {}
-                 })
+                axios.get('applyServlet?lbId='+this.ruleForm.region+
+                		"&testName="+this.ruleForm.testname+"&date="+this.ruleForm.date1+
+                		"&classTime="+this.ruleForm.date2+"&type="+this.ruleForm.resource+
+            		    "&equipment="+this.ruleForm.desc)
                  .then((response) => {
-                  console.log(response.data);
-                   this.site = response.data;
-                   this.tableData = this.site;
+                   console.log('123')
+                   console.log(response.data)
+                   if(response.data){
+                	   alert('申请成功，请等待管理员审核')
+                   }else{
+                	   alert('申请失败，请返回查看实验室是否空闲')
+                	   window.location.href = "index.jsp";
+                   }
                  })
                  .catch((error) => {
                    console.log(error);
-                 }); 
-                 window.location.href = 'index.jsp';
+                 });
+            	 
+                 //window.location.href = 'index.jsp';
            //  }
           } else {
             console.log('error submit!!');
@@ -235,14 +221,14 @@
         label: '2020-02-02'
       }]
 
-      for (i = 0; i < dateoptions.length; i++) {
+      for (i = 1; i < dateoptions.length + 1; i++) {
         var dd = new Date();
         dd.setDate(dd.getDate() + i); //获取AddDayCount天后的日期
         var y = dd.getFullYear();
         var m = dd.getMonth() + 1; //获取当前月份的日期
         var d = dd.getDate();
-        dateoptions[i].value = y + "-" + m + "-" + d;
-        dateoptions[i].label = y + "-" + m + "-" + d;
+        dateoptions[i-1].value = y + "-" + m + "-" + d;
+        dateoptions[i-1].label = y + "-" + m + "-" + d;
       }
       this.options = dateoptions;
     }
