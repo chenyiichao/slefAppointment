@@ -208,6 +208,7 @@
 						+row.lbId+'&classTime='+row.classTime+'&date='
 						+row.date+"&result=通过"+"&description=通过")
              	this.update() 
+             	location.reload()
             },
             handleClick3(row) { //拒绝，通过将这条数据更新到已审核
                 console.log(row);
@@ -227,6 +228,7 @@
                     		+row.lbId+'&classTime='+row.classTime+'&date='
                     		+row.date+"&result=未通过"+'&description='+value)
                  	this.update() 
+                 	location.reload()
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -240,7 +242,7 @@
                 axios.post('checkedTocheckingServlet?lbId='
                 		+row.lbId+'&classTime='+row.classTime+'&date='+row.date)
              	this.update() 
-             	console.log("123")
+             	location.reload()
             	/* .then((response) => {
                     this.tableData1 = response.data;
                 })
