@@ -21,6 +21,11 @@ public class DbUtil {
 		}
 	}
 	
+	/**
+	 * @desc 静态获取Connection
+	 * @return
+	 * @throws SQLException
+	 */
 	public static  Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(url,userName,passWord);
 	}
