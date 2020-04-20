@@ -20,7 +20,7 @@ public class TimerManager {
 
           /*** 定制每日2:00执行方法 ***/
 
-          calendar.set(Calendar.HOUR_OF_DAY, 15);
+          calendar.set(Calendar.HOUR_OF_DAY, 23);
           calendar.set(Calendar.MINUTE, 30);
           calendar.set(Calendar.SECOND, 0);
 
