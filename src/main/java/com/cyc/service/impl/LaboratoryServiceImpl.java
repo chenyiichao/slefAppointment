@@ -170,6 +170,7 @@ public class LaboratoryServiceImpl implements LaboratoryService{
 		type = "\'" + type + "\'";
 		description = "\'" + description +"\'";
 		volume = "\'" + volume +"\'";
+		name = "\'" + name +"\'";
 		String sql = "insert into laboratory(lb_id,lb_address,volume,type,description,name) values("
 				+  lbId  + ","
 				+ lbAddress + "," 

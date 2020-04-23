@@ -403,14 +403,12 @@
             }
             this.options = dateoptions
             //创建时自动更新数据表，端口为模拟数据，请改正端口输出数据格式为请在控制台查看
-
                 axios.get('queryLaboratoryServlet', {
                 params: {}
                })
                .then((response) => {
                  console.log(response.data)
-                 this.site = response.data;
-                 this.tableData1 = this.site
+                 this.tableData1 = response.data
                })
                .catch((error) => {
                  console.log(error);
