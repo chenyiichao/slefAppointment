@@ -173,9 +173,10 @@ body {
                    console.log(response.data)
                    if(response.data){
                 	   alert('申请成功，请等待管理员审核')
+                	   window.location.href = "index.jsp"
                    }else{
                 	   alert('申请失败，请返回查看实验室是否空闲')
-                	   window.location.href = "index.jsp";
+                	   window.location.href = "index.jsp"
                    }
                  })
                  .catch((error) => {

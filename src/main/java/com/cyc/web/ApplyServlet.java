@@ -43,6 +43,7 @@ public class ApplyServlet extends HttpServlet {
 		Gson json = new Gson();
 		boolean isAdd = laboratoryService.addChecking(lbId,testName,date,type,equipment,id,classTime);
 		String jsonStr = json.toJson(isAdd);
+		System.out.println(isAdd);
 		out.print(jsonStr);
 //		String page = isAdd?"index.jsp":"apply.jsp";
 //		response.sendRedirect(page);

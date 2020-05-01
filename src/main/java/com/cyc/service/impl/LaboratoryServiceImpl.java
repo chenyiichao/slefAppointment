@@ -68,7 +68,7 @@ public class LaboratoryServiceImpl implements LaboratoryService{
 				+ " where date = " + date
 				+ " and class_time = " + classTime
 				+ " and lb_id =  " + lbId; 
-		boolean isExist = checkingDao.findChecking(sql3);
+		boolean isExist = checkingDao.findChecking(sql3); //审核表是否存在
 		
 		//4.判断该实验室是否空闲
 		String sql4 = "select count(lb_id) from laboratory" 
@@ -97,7 +97,8 @@ public class LaboratoryServiceImpl implements LaboratoryService{
 		System.out.println(sql4);  
 		System.out.println(sql5);  
 		System.out.println(sql6);
-		if( isExist || (countFree < 1) ) {
+		if( !isExist &&  countFree > 0 ) {
+			System.out.println("进入更新实验室状态以及添加审核表信息");
 			laboratoryDao.updateState(sql5);
 			checkingDao.addChecking(sql6);
 			return true;
@@ -152,6 +153,7 @@ public class LaboratoryServiceImpl implements LaboratoryService{
 		type = "\'" + type + "\'";
 		description = "\'" + description +"\'";
 		volume = "\'" + volume +"\'";
+		name = "\'" + name +"\'";
 		String sql = "update laboratory "
 				+ "set lb_address = " + lbAddress +","
 				+ "type = " + type +","
